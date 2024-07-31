@@ -356,18 +356,12 @@ const ChatView = ({ messages, isHidden, vscodeThemeName, showAnnouncement, hideA
 				<>
 					{showAnnouncement && <Announcement hideAnnouncement={hideAnnouncement} />}
 					<div style={{ padding: "0 20px" }}>
-						<h2>What can I do for you?</h2>
-						<p>
-							Thanks to{" "}
-							<VSCodeLink
-								href="https://www-cdn.anthropic.com/fed9cc193a14b84131812372d8d5857f8f304c52/Model_Card_Claude_3_Addendum.pdf"
-								style={{ display: "inline" }}>
-								Claude 3.5 Sonnet's agentic coding capabilities,
-							</VSCodeLink>{" "}
-							I can handle complex software development tasks step-by-step. With tools that let me read &
-							write files, analyze project source code, and execute terminal commands (after you grant
-							permission), I can assist you in ways that go beyond simple code completion or tech support.
-						</p>
+					<h2>Claude代码助手</h2>
+					<h2>大米的代码助手</h2>
+					<p>
+						我能够逐步处理复杂的软件开发任务。借助允许我读取和写入文件、从头创建整个项目以及执行终端命令（在您授予权限后）的工具，我可以以超越简单代码补全或技术支持的方式为您提供帮助。
+					</p>
+
 					</div>
 				</>
 			)}

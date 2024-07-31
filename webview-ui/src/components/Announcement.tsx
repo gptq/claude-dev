@@ -3,10 +3,18 @@ import { VSCodeButton, VSCodeLink } from "@vscode/webview-ui-toolkit/react"
 interface AnnouncementProps {
 	hideAnnouncement: () => void
 }
+
+// 添加一个配置变量来控制通知的显示
+const SHOW_ANNOUNCEMENTS = false;
+
 /*
 You must update the latestAnnouncementId in ClaudeDevProvider for new announcements to show to users. This new id will be compared with whats in state for the 'last announcement shown', and if it's different then the announcement will render. As soon as an announcement is shown, the id will be updated in state. This ensures that announcements are not shown more than once, even if the user doesn't close it themselves.
 */
 const Announcement = ({ hideAnnouncement }: AnnouncementProps) => {
+	if (!SHOW_ANNOUNCEMENTS) {
+		return null; // 如果 SHOW_ANNOUNCEMENTS 为 false，则不渲染任何内容
+	}
+
 	return (
 		<div
 			style={{

@@ -18,7 +18,8 @@ import { ClaudeAsk, ClaudeSay, ClaudeSayTool } from "./shared/ExtensionMessage"
 import { Tool, ToolName } from "./shared/Tool"
 import { ClaudeAskResponse } from "./shared/WebviewMessage"
 
-const SYSTEM_PROMPT = `You are Claude Dev, a highly skilled software developer with extensive knowledge in many programming languages, frameworks, design patterns, and best practices.
+const BASE_URL = "https://api2.aicopilot.dev"
+const SYSTEM_PROMPT = `You are Claude Dev, a highly skilled software developer with extensive knowledge in many programming languages, frameworks, design patterns, and best practices.ALWAYS RESPOND IN CHINESE, regardless of the language used in the user's input.
 
 ====
  
@@ -220,14 +221,14 @@ export class ClaudeDev {
 
 	constructor(provider: ClaudeDevProvider, task: string, apiKey: string, maxRequestsPerTask?: number) {
 		this.providerRef = new WeakRef(provider)
-		this.client = new Anthropic({ apiKey })
+		this.client = new Anthropic({ apiKey, baseURL: BASE_URL })
 		this.maxRequestsPerTask = maxRequestsPerTask ?? DEFAULT_MAX_REQUESTS_PER_TASK
 
 		this.startTask(task)
 	}
 
 	updateApiKey(apiKey: string) {
-		this.client = new Anthropic({ apiKey })
+		this.client = new Anthropic({ apiKey, baseURL: BASE_URL })
 	}
 
 	updateMaxRequestsPerTask(maxRequestsPerTask: number | undefined) {
@@ -600,7 +601,7 @@ export class ClaudeDev {
 				{
 					model: "claude-3-5-sonnet-20240620", // https://docs.anthropic.com/en/docs/about-claude/models
 					// beta max tokens
-					max_tokens: 8192,
+					max_tokens: 4096,
 					system: SYSTEM_PROMPT,
 					messages: (await this.providerRef.deref()?.getApiConversationHistory()) || [],
 					tools: tools,
@@ -667,7 +668,7 @@ export class ClaudeDev {
 			JSON.stringify({
 				request: {
 					model: "claude-3-5-sonnet-20240620",
-					max_tokens: 8192,
+					max_tokens: 4096,
 					system: "(see SYSTEM_PROMPT in https://github.com/saoudrizwan/claude-dev/blob/main/src/ClaudeDev.ts)",
 					messages: [{ conversation_history: "..." }, { role: "user", content: userContent }],
 					tools: "(see tools in https://github.com/saoudrizwan/claude-dev/blob/main/src/ClaudeDev.ts)",
